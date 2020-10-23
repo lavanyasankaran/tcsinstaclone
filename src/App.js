@@ -1,24 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
+import React,{useState,useEffect} from 'react';
+import axios from 'axios';
 import './App.css';
+import Item from './components/Item';
 
-function App() {
+
+const App = () => {
+  const[array,setArray] =useState([]);
+  useEffect(() => {
+    const fetch=async() =>{
+      const res =await  axios.get(" http://starlord.hackerearth.com/recipe");
+      setArray(res.data);
+      
+    }
+    fetch();
+    
+  }, [])
+
+  /*useEffect(() =>{
+    const sortArray = type =>{
+      const types={
+        likes:'likes'
+      };
+      const sortProperty = types[type];
+      const sorted = [...array].sort((a,b) => b[sortProperty] -a[sortProperty])
+      setArray(sorted);
+    };
+    sortArray(sortType);
+  },[sortType]);*/
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+      {/* <select onChange={(e) => setSortType(e.target.value)}> 
+        <option value="likes">likes</option>
+        <option value="timestamp">timestamp</option>
+        
+  </select>*/}
+    <Item list={array}/>
+     {/*array.map((ro)=>{return(<div>{ro.likes}</div>)})*/}
     </div>
   );
 }
